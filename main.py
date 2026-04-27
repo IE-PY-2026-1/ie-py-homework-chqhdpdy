@@ -23,16 +23,17 @@ start_charge = ['사원증', '순찰용 손전등', '휴대용 전지 소켓']
 
 
 for i1 in range(999):
+    print(f'-'*60)
     print(f'보유중 {owned}')
     print(f'미보유 {not_owned}')
-    print(f'-'*20)
+    print(f'-'*60)
 
     print(f'실행할 항목을 선택')
     print(f'1. 시작 아이템 팩 선택')
     print(f'2. 아이템 등록')
     print(f'3. 아이템 판매')
     print(f'4. 아이템 합성')
-    print(f'5. 아이템 목록')
+    print(f'5. 아이템 목록 정보')
     print(f'6. 프로그램 종료')
     menu = int(input(f'번호 입력 : '))
 
@@ -69,6 +70,7 @@ for i1 in range(999):
                 owned.append(add_item)
             else:
                 print(f'보유중이거나 존재하지 않는 아이템 입니다.')
+                break
 
     elif menu == 3:
         sell_item = input(f'판매할 아이템 이름 : ')
@@ -84,8 +86,51 @@ for i1 in range(999):
     elif menu == 4:
         consum_item = input(f'합성할 이이템 이름 : ')
         if consum_item == '추억':
-            if '추억의 펜던트'
+            if '추억의 펜던트' in owned and '어느 날의 기억' in owned:
+                print(f'추억을 합성합니다.')
+                owned.insert('추억')
+                consums.remove('추억')
+                owned.remove('추억의 펜던트')
+                owned.remove('어느 날의 기억')
+                consumed.append('추억의 펜던트')
+                consumed.insert(1, '어느 날의 기억')
+                value += 200
+            else:
+                print(f'재료가 부족합니다.')
 
+        elif consum_item == '치성':
+            if '억류된 찬송' in owned and '밀라르카' in owned:
+                print(f'치성을 합성합니다.')
+                owned.insert('치성')
+                consums.remove('치성')
+                owned.remove('억류된 찬송')
+                owned.remove('밀라르카')
+                consumed.append('억류된 찬송')
+                consumed.insert(1, '밀라르카')
+                value += 200
+            else:
+                print(f'재료가 부족합니다.')
+
+        elif consum_item == '인슐레이터':
+            if '무정전 전원장치' in owned and '미니어처 전봇대' in owned:
+                print(f'인슐레이터를 합성합니다.')
+                owned.insert('인슐레이터')
+                consums.remove('인슐레이터')
+                owned.remove('무정전 전원장치')
+                owned.remove('미니어처 전봇대')
+                consumed.append('무정전 전원장치')
+                consumed.insert(1, '미니어처 전봇대')
+                value += 200
+            else:
+                print(f'재료가 부족합니다.')
+        else:
+            print(f'보유중이거나 존재하지 않는 아이템 입니다.')
+
+    elif menu == 5:
+        count_item = len(owned)
+        print(f'보유중 아이템 수 : {count_item}')
+        print(f'보유중 아이템 가치 : {value}')
+        print(f'소지금 : {money}')
 
     elif menu == 6:
         print(f'프로그램을 종료합니다.')
