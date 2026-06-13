@@ -1,6 +1,8 @@
 # 파일이름 :
 # 작 성 자 :
 
+import copy
+
 #보유 미보유 리스트
 owned = []
 not_owned = ['목각 인형', '돌무덤', '물부리', '추억의 펜던트', '어느 날의 기억', '경외심', '상처붙이', '작고 나쁠 인형', '억류된 찬송', '밀라르카', '사원증', '순찰용 손전등', '휴대용 전지 소켓', '무정전 전원장치', '미니어처 전봇대']
@@ -206,7 +208,30 @@ while True:
         print(f'잘못된 입력입니다. 정수만 입력.')
 
 
+past_scores = []
 
-with open('result.txt', 'r', encoding='utf-8') as high_score:
-    high_scores = high_score.readlines()
-    print(high_scores)
+with open('result.txt', 'r', encoding='utf-8') as past_score:
+    for line in past_score:
+        line = line.strip()
+
+        if line:
+            past_scores.append([line])
+
+print('지금까지 기록')
+for info in past_scores:
+    print(info)
+
+new_record = input("이름과 점수를 입력 (예: 검싱 120000): ")
+
+updated_scores = copy.deepcopy(past_scores)
+updated_scores.append([new_record])
+
+print()
+print('업데이트된 기록 리스트')
+for info in updated_scores:
+    print(info)
+
+
+with open('result.txt', 'w', encoding='utf-8') as file:
+    for score in updated_scores:
+        file.write(score[0] + '\n')
