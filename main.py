@@ -207,4 +207,6 @@ while True:
 
 
 
-with open('result.txt', 'r', encoding='utf-8') as score:
+with open('result.txt', 'r', encoding='utf-8') as high_score:
+    high_scores = high_score.readlines()
+    print(high_scores)
