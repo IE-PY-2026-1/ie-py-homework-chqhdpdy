@@ -65,11 +65,16 @@ def menu_sell_item(sell_item):
     global money
 
     if sell_item in owned:
-        price = float(input(f'아이템 가격 : '))
-        value -= price
-        money += price
-        owned.remove(sell_item)
-        not_owned.append(sell_item)
+        while True:
+            try:
+                price = float(input(f'아이템 가격 : '))
+                value -= price
+                money += price
+                owned.remove(sell_item)
+                not_owned.append(sell_item)
+                break
+            except ValueError:
+                print(f'정수를 입력해주세요.')
     else:
         print(f'미보유이거나 존재하지 않는 아이템 입니다.')
 
@@ -137,61 +142,69 @@ def menu_end(count_item):
 
 
 while True:
-    print(f'-'*60)
-    print(f'보유중 {owned}')
-    print(f'미보유 {not_owned}')
-    print(f'-'*60)
+    try:
+        print(f'-'*60)
+        print(f'보유중 {owned}')
+        print(f'미보유 {not_owned}')
+        print(f'-'*60)
 
-    print(f'실행할 항목을 선택')
-    print(f'1. 시작 아이템 팩 선택')
-    print(f'2. 아이템 등록')
-    print(f'3. 아이템 판매')
-    print(f'4. 아이템 합성')
-    print(f'5. 아이템 목록 정보')
-    print(f'6. 프로그램 종료')
-    menu = int(input(f'번호 입력 : '))
-    print(f'-'*60)
+        print(f'실행할 항목을 선택')
+        print(f'1. 시작 아이템 팩 선택')
+        print(f'2. 아이템 등록')
+        print(f'3. 아이템 판매')
+        print(f'4. 아이템 합성')
+        print(f'5. 아이템 목록 정보')
+        print(f'6. 프로그램 종료')
+        menu = int(input(f'번호 입력 : '))
+        print(f'-'*60)
 
-    count_item = len(owned) # 오류 방지용
+        count_item = len(owned) # 오류 방지용
 
-    if menu == 1:
-        menu_start_pack()
-
-
-    elif menu == 2:
-        for i2 in range(3):
-            add_item = input(f'등록할 아이템 이름 {i2 + 1} : ')
-            if add_item in not_owned:
-                value += float(input(f'아이템 가격 : '))
-                not_owned.remove(add_item)
-                owned.append(add_item)
-            else:
-                print(f'보유중이거나 존재하지 않는 아이템 입니다.')
-                break
-
-    elif menu == 3:
-        sell_item = input(f'판매할 아이템 이름 : ')
-        menu_sell_item(sell_item)
+        if menu == 1:
+            menu_start_pack()
 
 
-    elif menu == 4:
-        consum_item = input(f'합성할 이이템 이름 : ')
-        menu_consum_item(consum_item)
+        elif menu == 2:
+            for i2 in range(3):
+                add_item = input(f'등록할 아이템 이름 {i2 + 1} : ')
+                if add_item in not_owned:
+                    value += float(input(f'아이템 가격 : '))
+                    not_owned.remove(add_item)
+                    owned.append(add_item)
+                else:
+                    print(f'보유중이거나 존재하지 않는 아이템 입니다.')
+                    break
+
+        elif menu == 3:
+            sell_item = input(f'판매할 아이템 이름 : ')
+            menu_sell_item(sell_item)
+
+
+        elif menu == 4:
+            consum_item = input(f'합성할 이이템 이름 : ')
+            menu_consum_item(consum_item)
+            
+
+        elif menu == 5:
+            count_item = len(owned)
+            menu_count_item(count_item)
         
 
-    elif menu == 5:
-        count_item = len(owned)
-        menu_count_item(count_item)
-       
+        elif menu == 6:
+            if money == 0 and value == 0:
+                print(f'프로그램을 종료합니다.')
+            else:    
+                result_light = menu_end(count_item)
+                print(f'얻은 별빛 {result_light}')
+            break
 
-    elif menu == 6:
-        if money == 0 and value == 0:
-            print(f'프로그램을 종료합니다.')
-        else:    
-            result_light = menu_end(count_item)
-            print(f'얻은 별빛 {result_light}')
-        break
+        else:
+            print(f'잘못된 입력입니다.')
+            continue
 
-    else:
-        print(f'잘못된 입력입니다.')
-        continue
+    except ValueError:
+        print(f'잘못된 입력입니다. 정수만 입력.')
+
+
+
+with open('result.txt', 'r', encoding='utf-8') as score:
